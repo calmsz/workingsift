@@ -20,6 +20,9 @@ class App extends Component {
       <div>
         <h1>{t('app:title-home')}</h1>
         <h4>{t('app:description-home', {count: counts.messageTotal})}</h4>
+        { Object.keys(counts.dailyWordCount).map(k => 
+          <h3>{k}: {counts.dailyWordCount[k]} words</h3>
+        )}
         <ul>
           { messages.map((m, key) =>
             <li>
@@ -28,7 +31,7 @@ class App extends Component {
                   <li>
                     [{m.from['name']}]
                     [{m.subject}]
-                    [{m.date}]
+                    [{m.formattedDate}]
                   </li>
                   <li>
                     {m.from['email']}

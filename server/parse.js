@@ -6,11 +6,11 @@
 // Javascript nodes are run in a Node.js sandbox so you can require dependencies following the node paradigm
 // e.g. var moment = require('moment');
 
+const moment = require('moment');
 // Entry point for DAG node
 module.exports = function (got) {
   // inData contains the key/value pairs that match the given query
   const inData = got.in;
-
   console.log('email-sift-web: parse.js: running...');
 
   const results = inData.data.map(({ value: valueBuffer }) => {
@@ -21,12 +21,14 @@ module.exports = function (got) {
     // Not all emails contain a textBody so we do a cascade selection
     const body = textBody || strippedHtmlBody || '';
     const wordCount = countWords(body);
+    
     const authResults = headers[`Authentication-Results`];
-
     const DMARC = authResults.indexOf('dmarc=pass') === -1 ? false : true;
     const SPF = authResults.indexOf('spf=pass') === -1 ? false : true;
     const DKIM = authResults.indexOf('dkim=pass') === -1 ? false : true;
+    const formattedDate = moment(date).format('MM/DD/YYYY');
     
+
     const key = `${threadId}/${id}`;
     const value = {
       id,
@@ -35,7 +37,7 @@ module.exports = function (got) {
       threadId,
       wordCount,
       from,
-      date,
+      formattedDate,
       DMARC,
       SPF,
       DKIM
