@@ -16,19 +16,29 @@ module.exports = function (got) {
   const results = inData.data.map(({ value: valueBuffer }) => {
     // Parse the JMAP information for each message more info here: https://docs.redsift.com/docs/server-code-jmap
     const emailJmap = JSON.parse(valueBuffer);
-    const { id, threadId, subject, textBody, strippedHtmlBody } = emailJmap;
+    const { id, threadId, subject, textBody, strippedHtmlBody, headers, from, date } = emailJmap;
 
     // Not all emails contain a textBody so we do a cascade selection
     const body = textBody || strippedHtmlBody || '';
     const wordCount = countWords(body);
+    const authResults = headers[`Authentication-Results`];
 
+    const DMARC = authResults.indexOf('dmarc=pass') === -1 ? false : true;
+    const SPF = authResults.indexOf('spf=pass') === -1 ? false : true;
+    const DKIM = authResults.indexOf('dkim=pass') === -1 ? false : true;
+    
     const key = `${threadId}/${id}`;
     const value = {
       id,
       body,
       subject,
       threadId,
-      wordCount
+      wordCount,
+      from,
+      date,
+      DMARC,
+      SPF,
+      DKIM
     };
 
     // Emit into "messages-st" store so count can be calculated by the "Count" node
