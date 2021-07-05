@@ -27,6 +27,7 @@ module.exports = function (got) {
     const SPF = authResults.indexOf('spf=pass') === -1 ? false : true;
     const DKIM = authResults.indexOf('dkim=pass') === -1 ? false : true;
     const formattedDate = moment(date).format('MM/DD/YYYY');
+    const weekYear = `W${moment(date).week()}/${moment(date).year()}`;
     
 
     const key = `${threadId}/${id}`;
@@ -38,6 +39,7 @@ module.exports = function (got) {
       wordCount,
       from,
       formattedDate,
+      weekYear,
       DMARC,
       SPF,
       DKIM

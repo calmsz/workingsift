@@ -45,11 +45,11 @@ export default class MyController extends SiftController {
   getCounts() {
     return this.storage.get({
       bucket: 'counts',
-      keys: ['MESSAGES', 'WORDS', 'DAILYWORDCOUNT']
+      keys: ['MESSAGES', 'WORDS', 'ACUMWORDCOUNT']
     }).then((values) => {
       return {
         messageTotal: values[0].value || 0,
-        dailyWordCount: JSON.parse(values[2].value),
+        acumWordCount: JSON.parse(values[2].value),
         wordTotal: values[1].value || 0,
         wpmTotal: ((values[1].value || 0) / (values[0].value || 1)).toFixed(2)
       };

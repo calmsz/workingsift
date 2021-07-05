@@ -18,10 +18,13 @@ class App extends Component {
     const failImg = <img width='18px' src='assets/cancel.svg' />;
     return (
       <div>
-        <h1>{t('app:title-home')}</h1>
+        <h1 class='text-primary'>{t('app:title-home')} con class</h1>
         <h4>{t('app:description-home', {count: counts.messageTotal})}</h4>
-        { Object.keys(counts.dailyWordCount).map(k => 
-          <h3>{k}: {counts.dailyWordCount[k]} words</h3>
+        { Object.keys(counts.acumWordCount.daily).map(k => 
+          <h3>{k}: {counts.acumWordCount.daily[k]} words</h3>
+        )}
+        { Object.keys(counts.acumWordCount.weekly).map(k => 
+          <h3>{k}: {counts.acumWordCount.weekly[k]} words</h3>
         )}
         <ul>
           { messages.map((m, key) =>
