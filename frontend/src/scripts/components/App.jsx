@@ -15,8 +15,13 @@ class App extends Component {
   render() {
     const { t, data } = this.props;
     const { counts, messages } = data;
+    const mainStyle = {
+      'overflow': 'hidden',
+      'white-space': 'nowrap',
+      'text-overflow': 'ellipsis',
+    };
     return (
-      <div>
+      <div style={mainStyle}>
         <h1>{t('app:title-home')}</h1>
         <h4>{t('app:description-home', { count: counts.messageTotal })}</h4>
         <MessageStats counts={counts}></MessageStats>
