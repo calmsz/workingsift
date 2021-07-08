@@ -14,16 +14,18 @@ class App extends Component {
 
   render() {
     const { t, data } = this.props;
-    const { counts, messages } = data;
-    const mainStyle = {
-      'overflow': 'hidden',
-      'white-space': 'nowrap',
-      'text-overflow': 'ellipsis',
+    const { counts, messages } = data
+    const titleStyle = {
+      'font-size': '36px',
+      'font-weight': 'bolder',
+      'padding': '4px',
     };
     return (
-      <div style={mainStyle}>
-        <h1>{t('app:title-home')}</h1>
-        <h4>{t('app:description-home', { count: counts.messageTotal })}</h4>
+      <div>
+        <span style={titleStyle}>{t('app:title-home')}</span>
+        <span>          
+          <i>{t('app:description-home', { count: counts.messageTotal })}</i>
+        </span>
         <MessageStats counts={counts}></MessageStats>
         <MessageList messages={messages}></MessageList>
       </div>

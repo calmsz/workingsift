@@ -25,16 +25,8 @@ class MessageStats extends React.Component {
         datasets: [{
           label: 'Pass',
           data: [this.counts.acumWordCount.dmarc, this.counts.acumWordCount.spf, this.counts.acumWordCount.dkim],
-          backgroundColor: [
-            'rgb(10, 160, 32)',
-            'rgb(10, 160, 32)',
-            'rgb(10, 160, 32)'
-          ],
-          borderColor: [
-            'rgb(3, 90, 10)',
-            'rgb(3, 90, 10)',
-            'rgb(3, 90, 10)'
-          ],
+          backgroundColor: 'rgb(10, 160, 32)',
+          borderColor: 'rgb(10, 160, 32)',
           borderWidth: 1
         }]
       };
@@ -61,19 +53,18 @@ class MessageStats extends React.Component {
     const genWordcountDailyChart = () => {
       let labels = [];
       let data = [];
-      let colors = [];
+      let color = genColorRGB();
       Object.keys(this.counts.acumWordCount.daily).map(key => {
         labels.push(key);
         data.push(this.counts.acumWordCount.daily[key]);
-        colors.push(genColorRGB());
       });
       const dataWordcountDaily = {
         labels,
         datasets: [{
           label: 'Daily word count',
           data,
-          backgroundColor: colors,
-          borderColor: colors,
+          backgroundColor: color,
+          borderColor: color,
           borderWidth: 1
         }]
       };
@@ -99,19 +90,18 @@ class MessageStats extends React.Component {
     const genWordcountWeeklyChart = () => {
       let labels = [];
       let data = [];
-      let colors = [];
+      let color = genColorRGB();
       Object.keys(this.counts.acumWordCount.weekly).map(key => {
         labels.push(key);
         data.push(this.counts.acumWordCount.weekly[key]);
-        colors.push(genColorRGB());
       });
       const dataWordcountWeekly = {
         labels,
         datasets: [{
           label: 'Weekly word count',
           data,
-          backgroundColor: colors,
-          borderColor: colors,
+          backgroundColor: color,
+          borderColor: color,
           borderWidth: 1
         }]
       };
@@ -147,7 +137,6 @@ class MessageStats extends React.Component {
     };
     const divColStyle = {
       'display': 'table-cell',
-      'width': '25%',
     };
 
     return (
